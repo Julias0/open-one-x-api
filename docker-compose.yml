@@ -1,0 +1,28 @@
+version: "3"
+services:
+  app:
+    container_name: backend 
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "80:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    links:
+      - mongo
+    environment:
+      SECRET_KEY: MaaMatiManusherJoyy
+      PORT: 3000
+      MONGO_URL: mongodb://mongo/one-x
+      SENDGRID_API_KEY: SENDGRID_API_KEY_DUMMY
+      APP_URL: http://localhost:4200
+  mongo:
+    container_name: mongo
+    image: mongo
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27017:27017"
